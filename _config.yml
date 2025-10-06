@@ -1,0 +1,16 @@
+title: Notas atemporales
+author: Cristián Pérez Abo Hamed
+description: >-
+  Un espacio de reflexión personal.
+github_username: cperezabo
+linkedin_username: cperezabo
+disqus:
+  shortname: cristianperez
+
+exclude:
+  - .idea
+  - .ruby-lsp
+  - _site
+
+# jekyll-date-localization
+date_locale: es

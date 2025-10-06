@@ -1,0 +1,72 @@
+---
+layout: default
+---
+<div class="home">
+  {%- if page.title -%}<h1 class="page-heading">{{ page.title }}</h1>{%- endif -%}
+  {{ content }}
+
+  {%- if site.posts.size > 0 -%}
+  {%- assign all_categories = site.posts | map: "category" | uniq | sort -%}
+
+  <div class="category-filter">
+    <button class="category-btn active" data-category="all">todo</button>
+    {%- for cat in all_categories -%}{%- if cat -%}
+    <button class="category-btn" data-category="{{ cat }}">{{ cat }}</button>
+    {%- endif -%}{%- endfor -%}
+  </div>
+
+  <ul class="post-list">
+    {%- for post in site.posts -%}
+    <li data-category="{{ post.category | default: 'sin-categoria' }}" data-tags="{{ post.tags | join: ',' }}">
+      <span class="post-meta"><time>{{ post.date | date: '%Y-%m-%d' }}</time></span>
+      <h3><a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+      {%- if post.tags -%}<div class="post-tags">{%- for tag in post.tags -%}<button class="post-tag" data-tag="{{ tag }}">{{ tag }}</button>{%- endfor -%}</div>{%- endif -%}
+    </li>
+    {%- endfor -%}
+  </ul>
+
+  <p class="rss-subscribe">suscribite <a href="{{ "/feed.xml" | relative_url }}">vía RSS</a></p>
+  {%- endif -%}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const catBtns = document.querySelectorAll('.category-btn');
+    const tagBtns = document.querySelectorAll('.post-tag');
+    const posts = document.querySelectorAll('.post-list li');
+    let activeTag = new URLSearchParams(location.search).get('tag');
+
+    function filterPosts(category, tag) {
+      posts.forEach(p => {
+        const matchCat = category === 'all' || p.dataset.category === category;
+        const matchTag = !tag || (p.dataset.tags && p.dataset.tags.split(',').includes(tag));
+        p.style.display = (matchCat && matchTag) ? '' : 'none';
+      });
+      tagBtns.forEach(t => t.classList.toggle('active', t.dataset.tag === tag));
+    }
+
+    catBtns.forEach(btn => btn.addEventListener('click', () => {
+      catBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTag = null;
+      history.replaceState(null, '', location.pathname);
+      filterPosts(btn.dataset.category, null);
+    }));
+
+    tagBtns.forEach(btn => btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tag = btn.dataset.tag;
+      if (activeTag === tag) {
+        activeTag = null;
+        history.replaceState(null, '', location.pathname);
+      } else {
+        activeTag = tag;
+        history.replaceState(null, '', '?tag=' + tag);
+      }
+      const activeCat = document.querySelector('.category-btn.active')?.dataset.category || 'all';
+      filterPosts(activeCat, activeTag);
+    }));
+
+    if (activeTag) filterPosts('all', activeTag);
+  });
+</script>

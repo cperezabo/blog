@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | truncate: 160 }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+</head>
+<body>
+  <header>
+    <div>
+      <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <span class="author">{{ site.author }}</span>
+    </div>
+    <nav>
+      <a href="{{ '/sobre-mi' | relative_url }}" title="Sobre mí" class="icon-user"><i class="fa-solid fa-user"></i></a>
+      {%- if site.github_username %}<a href="https://github.com/{{ site.github_username }}" title="GitHub" class="icon-github"><i class="fa-brands fa-github"></i></a>{%- endif %}
+      {%- if site.linkedin_username %}<a href="https://linkedin.com/in/{{ site.linkedin_username }}" title="LinkedIn" class="icon-linkedin"><i class="fa-brands fa-linkedin"></i></a>{%- endif %}
+    </nav>
+  </header>
+
+  <main>{{ content }}</main>
+</body>
+</html>

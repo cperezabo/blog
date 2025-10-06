@@ -1,0 +1,30 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+jobs:
+  publicar:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Configurar Ruby"
+        uses: ruby/setup-ruby@v1.276.0
+
+      - name: "Instalar dependencias"
+        run: |
+          bundle install
+
+      - name: "Construir el sitio con Jekyll"
+        run: |
+          jekyll build
+
+      - name: "Publicar el sitio por FTP"
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: _site/
+          server-dir: /public_html/blog/
+          dangerous-clean-slate: false

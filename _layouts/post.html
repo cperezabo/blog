@@ -1,0 +1,25 @@
+---
+layout: default
+---
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+    <p class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time>
+    </p>
+  </header>
+
+  <div class="post-content">{{ content | toc }}</div>
+
+  {%- if site.disqus.shortname -%}{%- include disqus_comments.html -%}{%- endif -%}
+</article>
+
+<script>
+  document.querySelectorAll('.post-content h2[id], .post-content h3[id], .post-content h4[id]').forEach(h => {
+    const a = document.createElement('a');
+    a.className = 'anchor';
+    a.href = '#' + h.id;
+    a.textContent = '#';
+    h.appendChild(a);
+  });
+</script>

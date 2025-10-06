@@ -1,0 +1,66 @@
+// Syntax highlighting (cyberpunk palette)
+$hl-comment: #5a5a7a;
+$hl-keyword: #00f0ff;
+$hl-number: #ffcc00;
+$hl-string: #50fa7b;
+$hl-variable: #ff79c6;
+$hl-function: #bd93f9;
+$hl-error: #ff2b6e;
+
+.highlight {
+  color: var(--text-light);
+
+  // Comentarios
+  .c, .cm, .c1, .cs, .cp, .cpf {
+    color: $hl-comment;
+    font-style: italic;
+  }
+
+  // Keywords y tipos
+  .k, .kc, .kd, .kp, .kr, .kt, .kn {
+    color: $hl-keyword;
+    text-shadow: 0 0 12px rgba($hl-keyword, 0.5);
+  }
+
+  // Clases y namespaces
+  .nc, .nn, .ne, .nt, .nl {
+    color: $hl-keyword;
+  }
+
+  // Funciones y métodos
+  .nf, .fm, .na {
+    color: $hl-function;
+    text-shadow: 0 0 10px rgba($hl-function, 0.4);
+  }
+
+  // Números
+  .m, .mf, .mh, .mi, .mo, .il, .mb, .mx {
+    color: $hl-number;
+  }
+
+  // Strings
+  .s, .sb, .sc, .sd, .s1, .s2, .se, .sh, .si, .sx, .sr, .dl {
+    color: $hl-string;
+  }
+
+  // Variables
+  .nv, .vc, .vg, .vi, .no, .nb, .bp {
+    color: $hl-variable;
+  }
+
+  // Operadores y puntuación
+  .o, .ow, .p {
+    color: var(--text);
+  }
+
+  // Errores
+  .err {
+    color: $hl-error;
+    text-shadow: 0 0 12px rgba($hl-error, 0.6);
+  }
+
+  // Símbolos especiales (Ruby)
+  .ss {
+    color: $hl-keyword;
+  }
+}
